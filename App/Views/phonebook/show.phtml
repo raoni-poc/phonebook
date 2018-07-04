@@ -1,0 +1,59 @@
+<br/>
+<?php
+$phonebook = $this->views->phonebook;
+?>
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <form method="POST" action="store" accept-charset="UTF-8 ">
+            <div class="form-group">
+                <label for="name">
+                    Nome:
+                </label>
+                <input type="text" name="name" id="name" class="form-control"
+                       placeholder="digite a identificação do contato"
+                       value="<?= $phonebook->getName() ?>" disabled="disabled">
+            </div>
+
+            <div class="form-group">
+                <label for="name">
+                    Descrição:
+                </label>
+                <textarea name="description" class="form-control"
+                          disabled="disabled"><?= $phonebook->getDescription() ?></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Emails</label>
+
+                <?php foreach ($phonebook->getEmails() as $email) : ?>
+                    <div class="form-group">
+                        <input type="text" name="emails[]" class="form-control" disabled="disabled" value="<?= $email ?>"
+                               disabled="disabled">
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <!--                <div class="input-group">-->
+            <!--                    <input type="text" name="emails[]" class="form-control col-sm-12" placeholder="Email">-->
+            <!--                    <div class="input-group-append">-->
+            <!--                        <div class="input-group-text" style="background: darkgreen; color: #fff" onclick="addEmail()">-->
+            <!--                            Adicionar-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+
+            <div class="form-group">
+                <label>Telefones</label>
+
+                <?php foreach ($phonebook->getPhones() as $phone) : ?>
+                    <div class="form-group">
+                        <input type="text" name="phones[]" class="form-control" disabled="disabled" value="<?= $phone ?>"
+                               disabled="disabled">
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </form>
+    </div>
+</div>

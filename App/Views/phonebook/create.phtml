@@ -1,0 +1,99 @@
+<br/>
+<div class="row">
+    <div class="col-sm-12">
+
+        <form method="POST" action="store" accept-charset="UTF-8">
+
+            <input type="hidden" name="id" value="0">
+
+            <div class="form-group">
+                <label for="name">
+                    Nome:
+                </label>
+                <input type="text" name="name" id="name" class="form-control"
+                       placeholder="digite a identificação do contato">
+            </div>
+
+            <div class="form-group">
+                <label for="name">
+                    Descrição:
+                </label>
+                <textarea name="description" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <div class="input-group">
+                    <input type="text" name="emails[]" class="form-control col-sm-12" placeholder="Email">
+                    <div class="input-group-append">
+                        <div class="input-group-text" style="background: darkgreen; color: #fff" onclick="addEmail()">
+                            Adicionar
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="emails">
+            </div>
+
+            <div class="form-group">
+                <label>Telefone</label>
+                <div class="input-group">
+                    <input type="text" name="phones[]" class="form-control phone_with_ddd" placeholder="Telefone">
+                    <div class="input-group-append">
+                        <div class="input-group-text" style="background: darkgreen; color: #fff" onclick="addPhone()">
+                            Adicionar
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="phones">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Salvar</button>
+
+        </form>
+    </div>
+</div>
+
+<script type="application/javascript">
+    $(document).ready(function () {
+        $('.phone_with_ddd').mask('(00) 0000-0000# ');
+    })
+    function removeEmail(element) {
+        element.closest('.form-group').remove();
+    }
+
+    function addEmail() {
+        const html =
+            '<div class="form-group">'
+            + '<div class="input-group">'
+            + '<input type="text" name="emails[]" class="form-control col-sm-12" placeholder="Email">'
+            + '<div class="input-group-append">'
+            + '<div class="input-group-text" style="background: darkred; color: #fff" onclick="removeEmail($(this))">'
+            + 'Remover</div>'
+            + '</div>'
+            + '</div>';
+
+        $('#emails').append(html);
+    }
+
+    function removePhone(element) {
+        element.closest('.form-group').remove();
+    }
+
+    function addPhone() {
+        const html =
+            '<div class="form-group">'
+            + '<div class="input-group">'
+            + '<input type="text" name="phones[]" class="form-control col-sm-12 phone_with_ddd" placeholder="Telefone">'
+            + '<div class="input-group-append">'
+            + '<div class="input-group-text" style="background: darkred; color: #fff" onclick="removePhone($(this))">'
+            + 'Remover</div>'
+            + '</div>'
+            + '</div>';
+
+        $('#phones').append(html);
+        $('.phone_with_ddd').mask('(00) 0000-0000# ');
+    }
+</script>

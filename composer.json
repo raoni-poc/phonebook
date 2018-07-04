@@ -1,0 +1,17 @@
+{
+  "name": "rsporteman/phonebook",
+  "require": {
+    "php": ">=5.6"
+  },
+  "authors": [
+    {
+      "name":"Raoni Sporteman",
+      "email":"raonibs@gmail.com"
+    }
+  ],
+  "autoload":{
+    "psr-4":{
+      "App\\":"App/"
+    }
+  }
+}

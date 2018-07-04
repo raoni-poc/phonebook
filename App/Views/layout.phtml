@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/datatables.min.css">
+
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/datatables.min.js"></script>
+    <script src="/js/jquery.mask.js"></script>
+
+    <title>Agenda Telefônica</title>
+</head>
+<body>
+
+<?php include_once 'topbar.phtml'; ?>
+
+<div class="container">
+    <?php
+    if (isset($_SESSION['flash_danger'])) {
+        echo "<br>
+              <div class='row'>
+                <div class='alert alert-danger col-sm-12' role='alert'>
+                    ".$_SESSION['flash_danger']."
+                </div>
+              </div>";
+        unset($_SESSION['flash_danger']);
+    }
+    ?>
+    <?php
+    if (isset($_SESSION['flash_info'])) {
+        echo "<br>
+              <div class='row'>
+                <div class='alert alert-info col-sm-12' role='alert'>
+                    ".$_SESSION['flash_info']."
+                </div>
+              </div>";
+        unset($_SESSION['flash_info']);
+    }
+    ?>
+    <?php
+    if (isset($_SESSION['flash_success'])) {
+        echo "<br>
+              <div class='row'>
+                <div class='alert alert-success col-sm-12' role='alert'>
+                    ".$_SESSION['flash_success']."
+                </div>
+              </div>";
+        unset($_SESSION['flash_success']);
+    }
+    ?>
+    <?= $this->content() ?>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
