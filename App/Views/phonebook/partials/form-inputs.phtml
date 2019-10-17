@@ -1,0 +1,105 @@
+<?php
+$name = (isset($phonebook)) ? $phonebook->getName() : '';
+$description = (isset($phonebook)) ? $phonebook->getDescription() : '';
+$id = (isset($phonebook)) ? $phonebook->getId() : '';
+?>
+<div id="phonebook-form">
+    <input type="hidden" name="id" value="<?= (isset($id)) ? $id : '0'; ?>">
+
+    <div class="form-group">
+        <label for="name">
+            Nome:
+        </label>
+        <input type="text" name="name" id="name" class="form-control"
+               placeholder="digite a identificação do contato" value="<?= (isset($name)) ? $name : ''; ?>">
+    </div>
+
+    <div class="form-group">
+        <label for="name">
+            Descrição:
+        </label>
+        <textarea name="description" id="description" class="form-control"><?= (isset($description)) ? $description : ''; ?></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <div class="input-group">
+            <input type="text" name="emails[]" class="form-control col-sm-12 first-email-line" placeholder="Email"
+            value="<?= (isset($phonebook) && isset($phonebook->getEmails()[0])) ? $phonebook->getEmails()[0] : '' ?>">
+            <div class="input-group-append">
+                <div class="input-group-text button-add" style="background: darkgreen; color: #fff" onclick="addEmail()">
+                    Adicionar
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="emails">
+    </div>
+
+    <div class="form-group">
+        <label>Telefone</label>
+        <div class="input-group">
+            <input type="text" name="phones[]" class="form-control phone_with_ddd first-phone-line" placeholder="Telefone"
+            value="<?= (isset($phonebook) && isset($phonebook->getPhones()[0])) ? $phonebook->getPhones()[0] : '' ?>">
+            <div class="input-group-append">
+                <div class="input-group-text button-add" style="background: darkgreen; color: #fff" onclick="addPhone()">
+                    Adicionar
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="phones">
+    </div>
+</div>
+
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('.phone_with_ddd').mask('(00) 0000-0000# ');
+        });
+
+        function removeEmail(element) {
+            element.closest('.form-group').remove();
+        }
+
+        function addEmail(value = '') {
+            const html =
+                '<div class="form-group">'
+                + '<div class="input-group">'
+                + '<input type="text" name="emails[]" class="form-control col-sm-12" placeholder="Email" value="'+value+'">'
+                + '<div class="input-group-append">'
+                + '<div class="input-group-text button-remove" style="background: darkred; color: #fff" onclick="removeEmail($(this))">'
+                + 'Remover</div>'
+                + '</div>'
+                +'</div>';
+
+            $('#emails').append(html);
+        }
+
+        function removePhone(element) {
+            element.closest('.form-group').remove();
+        }
+
+        function addPhone(value = '') {
+            const html =
+                '<div class="form-group">'
+                + '<div class="input-group">'
+                + '<input type="text" name="phones[]" class="form-control col-sm-12 phone_with_ddd" placeholder="Telefone" value="'+value+'">'
+                + '<div class="input-group-append">'
+                + '<div class="input-group-text button-remove" style="background: darkred; color: #fff" onclick="removePhone($(this))">'
+                + 'Remover</div>'
+                + '</div>'
+                + '</div>';
+
+            $('#phones').append(html);
+            $('.phone_with_ddd').mask('(00) 0000-0000# ');
+        }
+
+        function setName(name) {
+            $('#name').val(name);
+        }
+
+        function setDescription(description) {
+            $('#description').val(description);
+        }
+    </script>

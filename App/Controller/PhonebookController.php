@@ -218,7 +218,7 @@ class PhonebookController extends Controller
     {
         $id = $entity->getId();
         $name = $entity->getName();
-        $content = $this->getViewContent('action-buttons', ['id' => $id, 'name'=> $name]);
+        $content = $this->getViewContent('phonebook/partials/action-buttons', ['id' => $id, 'name'=> $name]);
         return $content;
     }
 }

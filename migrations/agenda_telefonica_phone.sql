@@ -26,8 +26,6 @@ CREATE TABLE `phone` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `person_id` varchar(45) NOT NULL,
   `phone` varchar(45) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -38,7 +36,7 @@ CREATE TABLE `phone` (
 
 LOCK TABLES `phone` WRITE;
 /*!40000 ALTER TABLE `phone` DISABLE KEYS */;
-INSERT INTO `phone` VALUES (2,'3','(99) 9999-99999','2018-07-04 03:21:56','2018-07-04 03:21:56'),(3,'3','(22) 2222-22222','2018-07-04 03:21:56','2018-07-04 03:21:56'),(4,'3','(55) 5555-55555','2018-07-04 03:21:56','2018-07-04 03:21:56'),(5,'2','(99) 9999-99999','0000-00-00 00:00:00','2018-07-04 04:25:55');
+INSERT INTO `phone` VALUES (2,'3','(99) 9999-99999'),(3,'3','(22) 2222-22222'),(4,'3','(55) 5555-55555'),(5,'2','(99) 9999-99999');
 /*!40000 ALTER TABLE `phone` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

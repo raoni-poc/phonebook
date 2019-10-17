@@ -164,18 +164,16 @@ class Phonebook
         $lastId = $personId;
 
         $query = "INSERT INTO `email` 
-                  (`person_id`, `email`, `created_at`, `updated_at`)
+                  (`person_id`, `email`)
                   VALUES ";
-        $qPart = array_fill(0, count($entity->getEmails()), "(?, ?, ?, ?)");
+        $qPart = array_fill(0, count($entity->getEmails()), "(?, ?)");
         $query .= implode(",", $qPart);
         $stmt = $this->pdo->prepare($query);
         $valuesEmail = [];
         foreach ($entity->getEmails() as $key => $email) {
             $valuesEmail[] = [
                 'person_id' => $lastId,
-                'email' => trim($email),
-                'created_at' => $entity->getCreatedAt(),
-                'updated_at' => $entity->getUpdatedAt()
+                'email' => trim($email)
             ];
         }
         $i = 1;
@@ -200,9 +198,9 @@ class Phonebook
 
         $lastId = $personId;
         $query = "INSERT INTO `phone` 
-                  (`person_id`, `phone`, `created_at`, `updated_at`)
+                  (`person_id`, `phone`)
                   VALUES ";
-        $qPart = array_fill(0, count($entity->getPhones()), "(?, ?, ?, ?)");
+        $qPart = array_fill(0, count($entity->getPhones()), "(?, ?)");
         $query .= implode(",", $qPart);
         $stmt = $this->pdo->prepare($query);
         $valuesPhone = [];
@@ -210,8 +208,6 @@ class Phonebook
             $valuesPhone[] = [
                 'person_id' => $lastId,
                 'phone' => trim($phone),
-                'created_at' => $entity->getCreatedAt(),
-                'updated_at' => $entity->getUpdatedAt()
             ];
         }
         $i = 1;

@@ -26,8 +26,6 @@ CREATE TABLE `email` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `person_id` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -38,7 +36,7 @@ CREATE TABLE `email` (
 
 LOCK TABLES `email` WRITE;
 /*!40000 ALTER TABLE `email` DISABLE KEYS */;
-INSERT INTO `email` VALUES (1,'1','email@email.com','2018-07-04 03:15:24','2018-07-04 03:15:24'),(2,'3','joana.2@email.com','2018-07-04 03:21:56','2018-07-04 03:21:56'),(3,'3','joana.2@gmail.com','2018-07-04 03:21:56','2018-07-04 03:21:56');
+INSERT INTO `email` VALUES (1,'1','email@email.com'),(2,'3','joana.2@email.com'),(3,'3','joana.2@gmail.com');
 /*!40000 ALTER TABLE `email` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
