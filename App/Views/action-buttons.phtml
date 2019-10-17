@@ -1,0 +1,20 @@
+<div class="btn-group btn-group-sm float-right" role="group" aria-label="">
+    <div class="btn-group" role="group">
+        <button id="btnGroupDrop1"
+                type="button"
+                class="btn btn-primary btn-sm dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                onclick="personDelete('$id', '$name')">
+            Ação
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <a href="phonebook/show?id=$id" class="dropdown-item">Ver</a>
+            <a href="phonebook/edit?id=$id" class="dropdown-item btn-primary">Editar</a>
+            <button data-toggle="modal" data-target="#delete"
+                    class="dropdown-item">Apagar
+            </button>
+        </div>
+    </div>
+</div>

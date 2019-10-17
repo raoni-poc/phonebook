@@ -30,7 +30,7 @@ $phonebook = $this->views->phonebook;
             <div class="form-group">
                 <label>Email</label>
                 <div class="input-group">
-                    <input type="text" name="emails[]"
+                    <input type="email" name="emails[]"
                            value="<?= isset($phonebook->getEmails()[0]) ? $phonebook->getEmails()[0] : '' ?>"
                            class="form-control col-sm-12" placeholder="Email">
                     <div class="input-group-append">
@@ -93,7 +93,7 @@ $phonebook = $this->views->phonebook;
         const html =
             '<div class="form-group">'
             + '<div class="input-group">'
-            + '<input type="text" name="emails[]" value="' + value + '" class="form-control col-sm-12" placeholder="Email">'
+            + '<input type="email" name="emails[]" value="' + value + '" class="form-control col-sm-12" placeholder="Email">'
             + '<div class="input-group-append">'
             + '<div class="input-group-text" style="background: darkred; color: #fff" onclick="removeEmail($(this))">'
             + 'Remover</div>'

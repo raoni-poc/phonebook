@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\App;
@@ -22,47 +23,20 @@ class PhonebookController extends Controller
 
     public function json()
     {
-        $teste =    '{
-            "data": [ 
-                ["nome","desc","telefone", "emial", "action"],
-                ["nome","desc","telefone", "emial", "action"]
-            ]
-        }';
-
         $list = [];
         $entities = $this->repository->fetchAll();
-        foreach ($entities as $entity){
+        foreach ($entities as $entity) {
             $list[] = [
                 $entity->getName(),
                 $entity->getDescription(),
                 implode(', ', $entity->getPhones()),
                 implode(', ', $entity->getEmails()),
-                '    <div class="btn-group btn-group-sm float-right" role="group" aria-label="">
-                            <div class="btn-group" role="group">
-                                <button id="btnGroupDrop1"
-                                        type="button"
-                                        class="btn btn-primary btn-sm dropdown-toggle"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                        onclick="personDelete(\''.$entity->getId().'\', \''.$entity->getName().'\')">
-                                    Ação
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <a href="phonebook/show?id='.$entity->getId().'" class="dropdown-item">Ver</a>
-                                    <a href="phonebook/edit?id='.$entity->getId().'" class="dropdown-item btn-primary">Editar</a>
-                                    <button data-toggle="modal" data-target="#delete"
-                                            class="dropdown-item">Apagar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>',
+                $this->getActionsButtons($entity),
             ];
         }
 
-        echo '{ "data":'.json_encode($list).'}';
+        echo '{ "data":' . json_encode($list) . '}';
     }
-
 
     public function create()
     {
@@ -71,14 +45,14 @@ class PhonebookController extends Controller
 
     public function edit()
     {
-        $id = (int) filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+        $id = (int)filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
         $this->views->phonebook = $this->repository->find($id);
         $this->view("edit");
     }
 
     public function update()
     {
-        $id = (int) filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+        $id = (int)filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
 
         if (empty($id)) {
             echo "<h1>Erro 404: Página não encontrada</h1>";
@@ -87,7 +61,7 @@ class PhonebookController extends Controller
 
         $entity = $this->repository->find($id);
 
-        if(empty($entity)){
+        if (empty($entity)) {
             echo "<h1>Erro 404: Página não encontrada</h1>";
             return;
         }
@@ -102,7 +76,7 @@ class PhonebookController extends Controller
             }
             $msg .= '</ul>';
             $_SESSION['flash_danger'] = $msg;
-            header('Location: /phonebook/edit?id='.$entity->getId());
+            header('Location: /phonebook/edit?id=' . $entity->getId());
             return;
         }
 
@@ -116,7 +90,7 @@ class PhonebookController extends Controller
         $entity = $this->repository->update($entity);
         if ($entity) {
             $_SESSION['flash_success'] = 'Contato editado com sucesso!';
-            header('Location: /phonebook/show?id='.$entity->getId());
+            header('Location: /phonebook/show?id=' . $entity->getId());
         }
 
     }
@@ -155,16 +129,15 @@ class PhonebookController extends Controller
         $entity = $this->repository->save($entity);
         if ($entity) {
             $_SESSION['flash_success'] = 'Contato criado com sucesso!';
-            header('Location: /phonebook/show?id='.$entity->getId());
+            header('Location: /phonebook/show?id=' . $entity->getId());
         }
-
 
 
     }
 
     public function delete()
     {
-        $id = (int) filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+        $id = (int)filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
         if ($this->repository->delete($id)) {
             header('Location: /phonebook');
             $_SESSION['flash_danger'] = 'Contato Deletado';
@@ -173,7 +146,7 @@ class PhonebookController extends Controller
 
     public function show()
     {
-        $id = (int) filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+        $id = (int)filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
         $this->views->phonebook = $this->repository->find($id);
         $this->view("show");
     }
@@ -181,25 +154,25 @@ class PhonebookController extends Controller
     private function post()
     {
         $data = [];
-        $data['id'] = (int) trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS));
+        $data['id'] = (int)trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS));
         $data['name'] = trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS));
         $data['description'] = trim(filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS));
         $data['phones'] = filter_input(INPUT_POST, 'phones', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
         $data['emails'] = filter_input(INPUT_POST, 'emails', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY);
 
         $arr = [];
-        foreach ($data['phones'] as $phone){
+        foreach ($data['phones'] as $phone) {
             $phone = trim($phone);
-            if(!empty($phone)){
+            if (!empty($phone)) {
                 $arr[] = $phone;
             }
         }
         $data['phones'] = $arr;
 
         $arr = [];
-        foreach ($data['emails'] as $email){
+        foreach ($data['emails'] as $email) {
             $email = trim($email);
-            if(!empty($email)){
+            if (!empty($email)) {
                 $arr[] = $email;
             }
         }
@@ -214,30 +187,38 @@ class PhonebookController extends Controller
     {
         $error = [];
 
-        if(empty($data['name'])){
+        if (empty($data['name'])) {
             $error[] = 'O Nome não pode esta em branco';
         }
 
-        if(strlen($data['description']) > 500){
+        if (strlen($data['description']) > 500) {
             $error[] = 'A descrição pode ter no máximo 500 caracteres';
         }
 
-        foreach ($data['emails'] as $email){
-            if(!preg_match("/^([[:alnum:]_.-]){3,}@([[:lower:][:digit:]_.-]{3,})(.[[:lower:]]{2,3})(.[[:lower:]]{2})?$/", $email)){
+        foreach ($data['emails'] as $email) {
+            if (!preg_match("/^([[:alnum:]_.-]){3,}@([[:lower:][:digit:]_.-]{3,})(.[[:lower:]]{2,3})(.[[:lower:]]{2})?$/", $email)) {
                 $error[] = 'Um email não parece valido.';
             }
         }
 
-        foreach ($data['phones'] as $phone){
+        foreach ($data['phones'] as $phone) {
             $phone = str_replace(['+', '-'], '', filter_var($phone, FILTER_SANITIZE_NUMBER_INT));
             if (!(strlen($phone) == '10' || strlen($phone) == '11')) {
                 $error[] = 'O Telefone não parece válido';
             }
         }
 
-        if(!empty($error)){
+        if (!empty($error)) {
             return $error;
         }
         return;
+    }
+
+    private function getActionsButtons($entity)
+    {
+        $id = $entity->getId();
+        $name = $entity->getName();
+        $content = $this->getViewContent('action-buttons', ['id' => $id, 'name'=> $name]);
+        return $content;
     }
 }

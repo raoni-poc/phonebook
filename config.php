@@ -4,7 +4,7 @@ return [
         'host' => 'localhost',
         'dbname' => 'agenda_telefonica',
         'user' => 'root',
-        'password' => '5AShKf7osHyj',
+        'password' => 'UUbdCuu2307',
     ],
     'routes' => [
         'home' => [

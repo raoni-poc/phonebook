@@ -14,13 +14,13 @@ abstract class Controller
         $this->views = new \stdClass;
     }
 
-    protected function view($action, $layout = true)
+    protected function view($action, $layout = true, $vars = [])
     {
         $this->action = $action;
         if ($layout == true && file_exists("App/Views/layout.phtml")) {
             include_once "App/Views/layout.phtml";
         } else {
-            $this->content();
+            $this->content($vars);
         }
     }
 
@@ -30,7 +30,21 @@ abstract class Controller
         $current = explode('\\', $current);
         $current = end($current);
         $singleClassName = strtolower(str_replace("Controller", "", str_replace("App\\Controllers\\", "", $current)));
+        $path = $singleClassName . "/" . $this->action;
+        $this->render($path);
+    }
 
-        include_once "App/Views/" . $singleClassName . "/" . $this->action . ".phtml";
+    protected function render($path = '')
+    {
+        include_once "App/Views/" . $path . ".phtml";
+    }
+
+    protected function getViewContent($path, $vars)
+    {
+        $content = file_get_contents("App/Views/" . $path . ".phtml");
+        foreach ($vars as $key => $var) {
+            $content = str_replace('$'.$key, $var, $content);
+        }
+        return $content;
     }
 }
